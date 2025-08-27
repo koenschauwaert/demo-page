@@ -1,0 +1,48 @@
+{
+  "films": [
+    {
+      "id": "whats-your-story",
+      "title": "What's Your Story?",
+      "image": "whats-your-story.webp",
+      "description": "A compelling narrative exploring personal stories and human connections in contemporary society.",
+      "director": "BRUUT Collective",
+      "writer": "BRUUT Collective",
+      "starring": "Various Artists",
+      "releaseDate": "2023",
+      "url": "whats-your-story"
+    },
+    {
+      "id": "way-of-the-ninja",
+      "title": "Way of the Ninja",
+      "image": "way-of-the-ninja.webp",
+      "description": "An artistic exploration of discipline, mastery, and the ancient path of the ninja in modern times.",
+      "director": "BRUUT Collective",
+      "writer": "BRUUT Collective",
+      "starring": "International Cast",
+      "releaseDate": "2022",
+      "url": "way-of-the-ninja"
+    },
+    {
+      "id": "floating-on-the-river",
+      "title": "Einar Bjartur – Floating on the River",
+      "image": "floating-on-the-river.webp",
+      "description": "A meditative journey through landscapes and emotions, featuring the work of Einar Bjartur.",
+      "director": "BRUUT Collective",
+      "writer": "Einar Bjartur, BRUUT Collective",
+      "starring": "Einar Bjartur",
+      "releaseDate": "2021",
+      "url": "floating-on-the-river"
+    },
+    {
+      "id": "de-droom-van-een-elfenzang",
+      "title": "De Droom Van Een Elfenzang",
+      "image": "de-droom-van-een-elfenzang.webp",
+      "description": "Ali Tajari's personal story developed with AVROTROS as part of Fictiefilm Campus.",
+      "director": "Ali Tajari",
+      "writer": "Carmen Cortvriendt",
+      "starring": "To be announced",
+      "releaseDate": "In Development",
+      "url": "de-droom-van-een-elfenzang"
+    }
+  ]
+}

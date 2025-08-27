@@ -1,0 +1,397 @@
+/* Variables */
+:root {
+    --yellow: #fefc1b;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Navbar with glass effect */
+.navbar {
+    background: var(--yellow);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    backdrop-filter: none;
+}
+
+.navbar.scrolled {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.navbar-brand img {
+    filter: brightness(0) invert(0);
+}
+
+/* Hero Section - Two Independent Layers */
+.hero-section {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hero Image Layer - Fixed Full Width Slides */
+.hero-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 700%; /* 7 slides for infinite effect */
+    height: 100%;
+    display: flex;
+    transition: transform 1s ease-in-out;
+    z-index: 1;
+}
+
+.hero-slide {
+    width: calc(100% / 7); /* Each slide exactly 1/7 of total width */
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.hero-image,
+.hero-image-static {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+    z-index: 2;
+}
+
+/* Title Overlay - Separate Layer */
+.title-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent 60%, rgba(0,0,0,0.4) 100%);
+    z-index: 3;
+}
+
+.hero-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 80px;
+}
+
+/* Independent Title Layer - Absolute to hero section */
+.hero-titles-container {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.hero-titles-track {
+    display: flex;
+    align-items: baseline;
+    gap: 80px;
+    height: 100%;
+    transition: transform 1s ease-in-out;
+    position: relative;
+    padding-left: 50px;
+}
+
+.title-item {
+    flex-shrink: 0;
+    transition: opacity 0.5s ease;
+}
+
+.title-item.current {
+    opacity: 1;
+}
+
+.title-item.inactive {
+    opacity: 0.5;
+}
+
+.title-item.inactive:hover {
+    opacity: 1.0;
+}
+
+.title-text {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease; /* Changed to transition all properties */
+    display: block;
+}
+
+/* Hover effect - yellow color */
+.title-text:hover {
+    color: var(--yellow) !important; /* Yellow color on hover */
+    opacity: 1 !important;
+}
+
+/* Active/current title styling */
+.title-item.current .title-text {
+    opacity: 1;
+}
+
+.title-item.inactive .title-text {
+    opacity: 0.5;
+}
+
+.film-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: white;
+    padding-left: 50px;
+}
+
+/* Stay Updated Section */
+#stay-updated {
+    background-color: #1a1a1a;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.social-link i {
+    font-size: 1.5rem;
+}
+
+.social-link:hover {
+    color: #ccc;
+    transform: translateY(-2px);
+}
+
+/* Three Columns Section */
+.column-section {
+    min-height: 80vh;
+    border-right: 1px solid #333;
+    position: relative;
+}
+
+.column-section:last-child {
+    border-right: none;
+}
+
+.column-content {
+    max-width: 400px;
+    width: 100%;
+}
+
+.column-letter {
+    font-size: 8rem;
+    font-weight: 100;
+    color: rgba(255, 255, 255, 0.1);
+    margin-bottom: -40px;
+    position: relative;
+    z-index: 1;
+}
+
+.column-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.column-description {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.more-btn {
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 50px;
+    padding: 15px 40px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.more-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.more-btn .btn-text {
+    position: relative;
+    z-index: 1;
+}
+
+/* Film Details */
+.film-info .info-item {
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.film-info .info-item strong {
+    display: block;
+    margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Footer */
+footer {
+    background-color: #000 !important;
+}
+
+.footer-divider {
+    width: 200px;
+    height: 1px;
+    background-color: #333;
+    margin: 0 auto;
+}
+
+.linkedin-icon {
+    font-size: 2rem;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Design - Fixed positioning issues */
+@media (max-width: 992px) {
+    .hero-titles-track {
+        gap: 60px;
+        padding-left: 30px;
+    }
+    
+    .title-text {
+        font-size: 2.5rem;
+    }
+    
+    .film-title {
+        font-size: 2.5rem;
+        padding-left: 30px;
+    }
+    
+    .column-section {
+        min-height: 60vh;
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+    
+    .column-section:last-child {
+        border-bottom: none;
+    }
+    
+    .column-letter {
+        font-size: 6rem;
+    }
+    
+    .column-title {
+        font-size: 2rem;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-titles-container {
+        bottom: 0px;
+        height: 100px;
+    }
+    
+    .hero-titles-track {
+        gap: 40px;
+        padding-left: 20px;
+    }
+    
+    .title-text {
+        font-size: 2rem;
+    }
+    
+    .film-title {
+        font-size: 2rem;
+        padding-left: 20px;
+    }
+    
+    .hero-content {
+        padding-bottom: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-titles-container {
+        bottom: 0px;
+        height: 80px;
+    }
+    
+    .hero-titles-track {
+        gap: 30px;
+        padding-left: 15px;
+    }
+    
+    .title-text {
+        font-size: 1.5rem;
+    }
+    
+    .film-title {
+        font-size: 1.5rem;
+        padding-left: 15px;
+    }
+    
+    .column-letter {
+        font-size: 4rem;
+    }
+    
+    .column-title {
+        font-size: 1.5rem;
+    }
+}
