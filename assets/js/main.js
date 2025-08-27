@@ -1,3 +1,276 @@
+// Simple function to mark internal navigation
+function markInternalNavigation() {
+    localStorage.setItem('bruut-internal-nav', 'true');
+    console.log('Marked internal navigation');
+}
+
+// Check if coming from internal navigation via URL parameter
+function isInternalNavigation() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromInternal = urlParams.get('from') === 'internal';
+    
+    console.log('Main page - checking URL params:', fromInternal);
+    
+    // Clean up URL without page reload
+    if (fromInternal) {
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+    }
+    
+    return fromInternal;
+}
+
+// Detect browser back/forward navigation
+window.addEventListener('pageshow', function(event) {
+    console.log('pageshow event triggered');
+    console.log('persisted:', event.persisted);
+    console.log('referrer:', document.referrer);
+    
+    // If page is being shown from cache (browser back/forward)
+    if (event.persisted) {
+        console.log('Page loaded from cache - likely browser back navigation');
+        
+        // Check if coming from a film page
+        if (document.referrer && document.referrer.includes('film.html')) {
+            console.log('Browser back from film page detected');
+            
+            // Set flag for glass transition
+            localStorage.setItem('bruut-browser-back', 'true');
+            
+            // Trigger glass transition
+            showGlassTransitionMainPage();
+            return;
+        }
+    }
+});
+
+// Also listen for popstate (browser back/forward)
+window.addEventListener('popstate', function(event) {
+    console.log('popstate event triggered');
+    console.log('state:', event.state);
+    console.log('referrer:', document.referrer);
+    
+    // Check if coming from film page
+    if (document.referrer && document.referrer.includes('film.html')) {
+        console.log('Browser navigation from film page detected');
+        localStorage.setItem('bruut-browser-back', 'true');
+    }
+});
+
+// Update your isReturningToHome function to include browser back detection
+function isReturningToHome() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const returnParam = urlParams.get('return') === 'true';
+    const browserBack = localStorage.getItem('bruut-browser-back') === 'true';
+    
+    console.log('Main page - checking return conditions:');
+    console.log('URL return param:', returnParam);
+    console.log('Browser back flag:', browserBack);
+    console.log('Referrer:', document.referrer);
+    
+    // Clear browser back flag
+    localStorage.removeItem('bruut-browser-back');
+    
+    // Clean up URL if returning via URL param
+    if (returnParam) {
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+    }
+    
+    // Return true if any internal navigation detected
+    const isReturning = returnParam || browserBack || 
+                       (document.referrer && document.referrer.includes('film.html'));
+    
+    console.log('Final isReturning result:', isReturning);
+    
+    return isReturning;
+}
+
+// Enhanced glass transition with proper sequencing
+function showGlassTransitionMainPage() {
+    console.log('Starting 1-second glass transition on main page');
+    
+    // Immediately hide any existing loading screen
+    const existingLoadingScreen = document.getElementById('loading-screen');
+    if (existingLoadingScreen) {
+        existingLoadingScreen.style.display = 'none';
+        existingLoadingScreen.remove();
+    }
+    
+    // Ensure body is ready
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+    
+    // Phase 1: Start with black overlay (0-200ms)
+    const blackOverlay = document.createElement('div');
+    blackOverlay.className = 'black-overlay';
+    blackOverlay.id = 'transition-black';
+    document.body.appendChild(blackOverlay);
+    
+    console.log('Phase 1: Black overlay created');
+    
+    // Phase 2: Create glass overlay behind black (at 100ms)
+    setTimeout(() => {
+        console.log('Phase 2: Creating glass overlay');
+        
+        const incomingGlass = document.createElement('div');
+        incomingGlass.id = 'navigation-glass';
+        incomingGlass.style.opacity = '0';
+        incomingGlass.style.visibility = 'hidden';
+        document.body.appendChild(incomingGlass);
+        
+        // Phase 3: Fade out black, show glass (200-500ms)
+        setTimeout(() => {
+            console.log('Phase 3: Fading to glass blur');
+            
+            blackOverlay.classList.add('fade-out');
+            incomingGlass.classList.add('fade-in');
+            
+            // Phase 4: Hold glass blur briefly (500-700ms)
+            setTimeout(() => {
+                console.log('Phase 4: Holding glass blur');
+                
+                // Phase 5: Fade out glass, show content (700-1000ms)
+                setTimeout(() => {
+                    console.log('Phase 5: Fading out glass, showing content');
+                    
+                    incomingGlass.classList.remove('fade-in');
+                    incomingGlass.classList.add('fade-out');
+                    
+                    // Clean up after animation completes
+                    setTimeout(() => {
+                        console.log('Transition complete - cleaning up');
+                        
+                        if (blackOverlay.parentNode) {
+                            blackOverlay.parentNode.removeChild(blackOverlay);
+                        }
+                        if (incomingGlass.parentNode) {
+                            incomingGlass.parentNode.removeChild(incomingGlass);
+                        }
+                    }, 300); // Wait for fade-out to complete
+                    
+                }, 200); // Hold glass for 200ms
+            }, 300); // Glass fade-in duration
+        }, 100); // Small delay for glass creation
+    }, 100); // Small delay for black overlay
+}
+
+// Updated DOMContentLoaded
+document.addEventListener('DOMContentLoaded', async function() {
+    // Check if returning from film page with simple URL parameter
+    const isReturning = isReturningToHome();
+    
+    console.log('Main page - isReturning:', isReturning);
+    
+    if (isReturning) {
+        // User is returning from film page - show glass transition ONLY
+        console.log('Returning user detected - showing glass transition ONLY');
+        
+        // Immediately prevent any loading screen from showing
+        document.body.classList.remove('loading');
+        
+        showGlassTransitionMainPage();
+        
+        // Initialize content immediately
+        loadFilmsData();
+        setCurrentYear();
+        
+        // Add logo click handler
+        setTimeout(() => {
+            const logoLink = document.querySelector('.navbar-brand');
+            if (logoLink) {
+                logoLink.addEventListener('click', function() {
+                    window.location.href = 'index.html';
+                });
+            }
+        }, 100);
+        
+    } else {
+        // Normal first visit - show yellow loading animation
+        console.log('First visit detected - showing yellow loading animation');
+        
+        document.body.classList.add('loading');
+        
+        const loadingPromise = loadSiteContent();
+        
+        setTimeout(() => {
+            showPageContent();
+        }, 500);
+        
+        setTimeout(() => {
+            hideLoadingScreen();
+        }, 2000);
+        
+        setTimeout(() => {
+            const logoLink = document.querySelector('.navbar-brand');
+            if (logoLink) {
+                logoLink.addEventListener('click', function() {
+                    window.location.href = 'index.html';
+                });
+            }
+        }, 2500);
+        
+        try {
+            await loadingPromise;
+            console.log('Content loading complete');
+        } catch (error) {
+            console.error('Error during loading:', error);
+        }
+    }
+});
+
+// Function to show page content (called at 500ms)
+function showPageContent() {
+    // Remove loading class and show page content
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+    
+    console.log('Page content revealed at 500ms');
+}
+
+// Function to hide loading screen completely (called at 2000ms)
+function hideLoadingScreen() {
+    // Hide loading screen
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.classList.add('loaded');
+    }
+    
+    console.log('Loading screen hidden at 2000ms');
+}
+
+// Function to load all site content in background
+async function loadSiteContent() {
+    try {
+        // Load films data
+        await loadFilmsData();
+        
+        // Set current year
+        setCurrentYear();
+        
+        // Preload critical images (first few carousel images)
+        if (filmsData.length > 0) {
+            const preloadPromises = filmsData.slice(0, 3).map(film => {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = resolve;
+                    img.onerror = resolve; // Don't fail if image doesn't load
+                    img.src = `assets/images/${film.image}`;
+                });
+            });
+            
+            // Wait for first few images to load
+            await Promise.all(preloadPromises);
+        }
+        
+        console.log('All content loaded successfully');
+        
+    } catch (error) {
+        console.error('Error loading site content:', error);
+        throw error;
+    }
+}
+
 let filmsData = [];
 let currentFilmIndex = 0;
 let currentTitlePosition = 0;
@@ -7,15 +280,20 @@ let titleWidths = [];
 let titleElements = [];
 let currentPadding = 50;
 
-// Load films data from JSON
+// Load films data from JSON (modified to return promise)
 async function loadFilmsData() {
     try {
         const response = await fetch('films.json');
         const data = await response.json();
         filmsData = data.films;
+        
+        // Initialize slider immediately after data is loaded
         initializeSlider();
+        
+        return filmsData;
     } catch (error) {
         console.error('Error loading films data:', error);
+        throw error;
     }
 }
 
@@ -96,7 +374,7 @@ function handleResize() {
     }, 100);
 }
 
-// Create image carousel (same as before)
+// Create image carousel
 function createImageCarousel() {
     const heroSection = document.querySelector('.hero-section');
     
@@ -148,7 +426,7 @@ function createImageCarousel() {
     heroSection.appendChild(titleOverlay);
 }
 
-// Create infinite title track with many copies
+// Create infinite title track with simple HTML tooltips
 function createInfiniteTitleTrack() {
     const heroSection = document.querySelector('.hero-section');
     
@@ -174,12 +452,19 @@ function createInfiniteTitleTrack() {
             titleItem.setAttribute('data-film-index', index);
             titleItem.setAttribute('data-copy', copy);
             
+            // Create tooltip element
+            const tooltip = document.createElement('div');
+            tooltip.className = 'title-tooltip';
+            tooltip.textContent = 'More information';
+            
             const titleText = document.createElement('span');
             titleText.className = 'title-text';
             titleText.textContent = film.title;
             titleText.setAttribute('data-url', film.url);
             titleText.setAttribute('data-index', index);
             
+            // Simple structure
+            titleItem.appendChild(tooltip);
             titleItem.appendChild(titleText);
             titleTrack.appendChild(titleItem);
             
@@ -189,6 +474,9 @@ function createInfiniteTitleTrack() {
     
     titleContainer.appendChild(titleTrack);
     heroSection.appendChild(titleContainer);
+    
+    // Debug: Log to console to verify structure
+    console.log('Title track created with', titleElements.length, 'elements');
 }
 
 // Calculate title widths and positions with current responsive values
@@ -286,19 +574,92 @@ function updateTitleOpacity() {
     });
 }
 
-// Handle title clicks - ONLY navigate to film pages
+// Keep your existing handleTitleClick the same
 function handleTitleClick(event) {
     const target = event.target;
     
     if (target.classList.contains('title-text')) {
         const url = target.getAttribute('data-url');
         
-        // Always navigate to the film page, regardless of current/inactive state
         if (url) {
-            window.location.href = `film.html?film=${url}`;
+            if (document.body.classList.contains('page-transitioning')) {
+                return;
+            }
+            
+            event.preventDefault();
+            
+            // Stop carousel
+            clearInterval(sliderInterval);
+            
+            // Start transition
+            startGlassTransition(url);
         }
     }
 }
+
+// Enhanced outgoing transition with 1-second duration
+function startGlassTransition(filmUrl) {
+    console.log('Starting 1-second outgoing transition');
+    
+    // Add transitioning class for page blur
+    document.body.classList.add('page-transitioning');
+    
+    // Phase 1: Blur current page (0-800ms)
+    const glassOverlay = document.createElement('div');
+    glassOverlay.id = 'navigation-glass';
+    glassOverlay.style.opacity = '0';
+    glassOverlay.style.visibility = 'hidden';
+    document.body.appendChild(glassOverlay);
+    
+    // Stop carousel
+    clearInterval(sliderInterval);
+    
+    console.log('Phase 1: Starting page blur');
+    
+    // Phase 2: Fade in glass overlay (200-800ms)
+    setTimeout(() => {
+        console.log('Phase 2: Adding glass overlay');
+        glassOverlay.classList.add('fade-in');
+        
+        // Phase 3: Navigate after glass is fully visible (800-1000ms)
+        setTimeout(() => {
+            console.log('Phase 3: Navigating to film page');
+            window.location.href = `film.html?film=${filmUrl}&from=internal`;
+        }, 600); // Wait for glass transition
+        
+    }, 200); // Delay glass overlay
+}
+
+// Browser navigation detection (keep existing)
+window.addEventListener('pageshow', function(event) {
+    console.log('pageshow event triggered');
+    console.log('persisted:', event.persisted);
+    console.log('referrer:', document.referrer);
+    
+    if (event.persisted) {
+        console.log('Page loaded from cache - likely browser back navigation');
+        
+        if (document.referrer && document.referrer.includes('film.html')) {
+            console.log('Browser back from film page detected');
+            localStorage.setItem('bruut-browser-back', 'true');
+            
+            // For cached pages, immediately trigger glass transition
+            showGlassTransitionMainPage();
+            return;
+        }
+    }
+});
+
+window.addEventListener('popstate', function(event) {
+    console.log('popstate event triggered');
+    console.log('state:', event.state);
+    console.log('referrer:', document.referrer);
+    
+    if (document.referrer && document.referrer.includes('film.html')) {
+        console.log('Browser navigation from film page detected');
+        localStorage.setItem('bruut-browser-back', 'true');
+    }
+});
 
 // Move to next slide (only called by auto-slider)
 function nextSlide() {
@@ -344,9 +705,3 @@ function setCurrentYear() {
         yearElement.textContent = new Date().getFullYear();
     }
 }
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    loadFilmsData();
-    setCurrentYear();
-});

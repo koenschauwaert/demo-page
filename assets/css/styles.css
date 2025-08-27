@@ -1,6 +1,7 @@
 /* Variables */
 :root {
     --yellow: #fefc1b;
+    --black: #000000;
 }
 
 /* Global Styles */
@@ -17,22 +18,50 @@ body {
     overflow-x: hidden;
 }
 
-/* Navbar with glass effect */
+/* Navbar with constrained width */
 .navbar {
-    background: var(--yellow);
+    background: transparent !important;
     z-index: 1000;
     transition: all 0.3s ease;
-    backdrop-filter: none;
+    padding: 0;
 }
 
 .navbar.scrolled {
+    background: transparent !important;
+    /*
     background: rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
+    */
+}
+
+.navbar .container-fluid {
+    width: 100%;
+    max-width: none;
+    padding-left: 0;
+    padding-right: 150px; /* Space from right edge */
+    justify-content: flex-end !important; /* Push content to right */
+}
+
+.navbar-brand {
+    background-color: var(--yellow);    
+    padding: 8px 12px; /* Padding around logo */
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    background-color: var(--black); /* Slightly darker yellow on hover */
 }
 
 .navbar-brand img {
-    filter: brightness(0) invert(0);
+    filter: brightness(0); /* Make logo black on yellow background */
+    height: 50px;
+    display: block;
+}
+
+.navbar-brand img:hover {
+    filter: invert(100); /* Make logo black on yellow background */
 }
 
 /* Hero Section - Two Independent Layers */
@@ -110,7 +139,7 @@ body {
     left: 0;
     right: 0;
     height: 120px;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible for tooltips */
     z-index: 5;
 }
 
@@ -127,6 +156,7 @@ body {
 .title-item {
     flex-shrink: 0;
     transition: opacity 0.5s ease;
+    position: relative;
 }
 
 .title-item.current {
@@ -137,8 +167,28 @@ body {
     opacity: 0.5;
 }
 
-.title-item.inactive:hover {
+.title-item:hover {
     opacity: 1.0;
+}
+
+/* Simple tooltip - hidden by default */
+.title-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    padding-left: 4px;
+    margin-bottom: -16px;
+    color: white;
+    font-size: 1rem;
+    font-weight: normal;
+    white-space: nowrap;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+}
+
+/* Show tooltip on hover */
+.title-item:hover .title-tooltip {
+    display: block; /* Show on hover */
 }
 
 .title-text {
@@ -147,14 +197,13 @@ body {
     color: white;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.3s ease; /* Changed to transition all properties */
+    transition: color 0.3s ease;
     display: block;
 }
 
 /* Hover effect - yellow color */
 .title-text:hover {
-    color: var(--yellow) !important; /* Yellow color on hover */
-    opacity: 1 !important;
+    color: var(--yellow);
 }
 
 /* Active/current title styling */
@@ -178,11 +227,11 @@ body {
     background-color: #1a1a1a;
 }
 
+/* Updated Social Links - Single LinkedIn */
 .social-links {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
     margin-top: 30px;
 }
 
@@ -194,6 +243,8 @@ body {
     text-decoration: none;
     font-size: 1.1rem;
     transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 5px;
 }
 
 .social-link i {
@@ -201,8 +252,21 @@ body {
 }
 
 .social-link:hover {
-    color: #ccc;
+    color: var(--yellow);
     transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Email Link Styling */
+.email-link {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.email-link:hover {
+    color: var(--yellow);
+    text-decoration: underline;
 }
 
 /* Three Columns Section */
@@ -302,7 +366,264 @@ footer {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Responsive Design - Fixed positioning issues */
+/* Ensure loading screen can be hidden when needed */
+#loading-screen {
+    display: block;
+}
+
+#loading-screen.force-hide {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Yellow background layer */
+.loading-yellow-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--yellow);
+    z-index: 10002;
+    animation: slideUpYellow 2s ease-in-out forwards;
+}
+
+/* Glass layer */
+.loading-glass-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 10001;
+    opacity: 1;
+    animation: showGlass 2s ease-in-out forwards;
+}
+
+/* Logo layer */
+.loading-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10003;
+    animation: fadeOutLogo 2s ease-in-out forwards;
+}
+
+.loading-logo img {
+    width: 120px;
+    height: auto;
+    filter: brightness(0); /* Black logo on yellow background */
+}
+
+/* Animations */
+@keyframes slideUpYellow {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(0); /* Stay for 500ms */
+    }
+    100% {
+        transform: translateY(-100%); /* Slide up in remaining 1500ms */
+    }
+}
+
+@keyframes showGlass {
+    0% {
+        opacity: 1;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1; /* Show glass as yellow slides up */
+    }
+    100% {
+        opacity: 0; /* Fade out glass effect */
+    }
+}
+
+@keyframes fadeOutLogo {
+    0% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Hide loading screen after animation */
+#loading-screen.loaded {
+    display: none;
+}
+
+/* Initial page state - hidden during loading */
+body.loading {
+    overflow: hidden;
+}
+
+body.loading .navbar,
+body.loading .hero-section,
+body.loading #stay-updated,
+body.loading #three-columns,
+body.loading footer {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Ensure page content is visible when loaded */
+body.loaded .navbar,
+body.loaded .hero-section,
+body.loaded #stay-updated,
+body.loaded #three-columns,
+body.loaded footer {
+    opacity: 1;
+}
+
+/* Navigation Glass Overlay with CSS Animations */
+/* Immediate black overlay for internal navigation */
+.internal-navigation-loading {
+    background: #000 !important;
+}
+
+.internal-navigation-loading * {
+    opacity: 0 !important;
+}
+
+/* Enhanced Navigation System with Slower Transitions */
+.black-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 25000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-out;
+}
+
+.black-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#navigation-glass {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 20000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.8s ease-in-out;
+}
+
+#navigation-glass.fade-in {
+    opacity: 1;
+    visibility: visible;
+}
+
+#navigation-glass.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Smooth page blur for outgoing transitions */
+.page-transitioning .hero-section,
+.page-transitioning .navbar,
+.page-transitioning #stay-updated,
+.page-transitioning #three-columns,
+.page-transitioning footer {
+    animation: pageBlurOut 0.8s ease-out forwards;
+}
+
+@keyframes pageBlurOut {
+    0% {
+        opacity: 1;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.3;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        transform: scale(1.02);
+    }
+}
+
+@keyframes glassAppearSmooth {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+    1% {
+        visibility: visible;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+}
+
+@keyframes glassDisappearSmooth {
+    0% {
+        opacity: 1;
+        visibility: visible;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+    99% {
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+}
+
+@keyframes pageBlur {
+    0% {
+        opacity: 1;
+        visibility: visible;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+        transform: scale(1);
+    }
+    1% {
+        visibility: visible;
+    }
+    100% {
+        opacity: 0.7;
+        visibility: visible;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        transform: scale(1.02);
+    }
+}
+
+/* Responsive Design */
 @media (max-width: 992px) {
     .hero-titles-track {
         gap: 60px;
@@ -311,6 +632,11 @@ footer {
     
     .title-text {
         font-size: 2.5rem;
+    }
+    
+    .title-tooltip {
+        font-size: 0.9rem;
+        padding: 5px 10px;
     }
     
     .film-title {
@@ -343,8 +669,12 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .loading-logo img {
+        width: 80px;
+    }
+
     .hero-titles-container {
-        bottom: 0px;
+        bottom: 60px;
         height: 100px;
     }
     
@@ -357,6 +687,11 @@ footer {
         font-size: 2rem;
     }
     
+    .title-tooltip {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+    
     .film-title {
         font-size: 2rem;
         padding-left: 20px;
@@ -365,14 +700,26 @@ footer {
     .hero-content {
         padding-bottom: 60px;
     }
+
+    .social-links {
+        margin-top: 20px;
+    }
+    
+    .social-link {
+        padding: 8px 16px;
+        font-size: 1rem;
+    }
+    
+    .social-link i {
+        font-size: 1.3rem;
+    }
 }
 
 @media (max-width: 576px) {
-    .hero-titles-container {
-        bottom: 0px;
-        height: 80px;
+    .loading-logo img {
+        width: 60px;
     }
-    
+
     .hero-titles-track {
         gap: 30px;
         padding-left: 15px;
@@ -380,6 +727,11 @@ footer {
     
     .title-text {
         font-size: 1.5rem;
+    }
+    
+    .title-tooltip {
+        font-size: 0.7rem;
+        padding: 3px 6px;
     }
     
     .film-title {

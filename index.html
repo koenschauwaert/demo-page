@@ -9,11 +9,20 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+    <!-- Loading Animation -->
+    <div id="loading-screen">
+        <div class="loading-yellow-bg"></div>
+        <div class="loading-glass-layer"></div>
+        <div class="loading-logo">
+            <img src="assets/images/bruut-logo.webp" alt="BRUUT INC.">
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container-fluid justify-content-end">
-            <a class="navbar-brand" href="#">
-                <img src="assets/images/bruut-logo.webp" alt="BRUUT INC." height="40">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/bruut-logo.webp" alt="BRUUT INC." height="30">
             </a>
         </div>
     </nav>
@@ -40,15 +49,7 @@
                     <h2 class="mb-4">Stay Updated</h2>
                     <p class="mb-4">Follow our journey and stay connected with BRUUT INC.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link me-4">
-                            <i class="bi bi-facebook"></i>
-                            <span>Facebook</span>
-                        </a>
-                        <a href="#" class="social-link me-4">
-                            <i class="bi bi-instagram"></i>
-                            <span>Instagram</span>
-                        </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" onclick="window.open('https://www.linkedin.com/company/bruut-inc/about/', '_blank')">
                             <i class="bi bi-linkedin"></i>
                             <span>LinkedIn</span>
                         </a>
@@ -108,11 +109,10 @@
                 <div class="col-12">
                     <h3 class="mb-3">Aesthetic. Defiant. Wild.</h3>
                     <div class="footer-divider mb-3"></div>
-                    <h4 class="mb-4">hello@bruut.co</h4>
+                    <h4 class="mb-4">
+                        <a href="mailto:hello@bruut.co" class="email-link">hello@bruut.co</a>
+                    </h4>
                     <div class="footer-divider mb-4"></div>
-                    <div class="linkedin-icon mb-4">
-                        <i class="bi bi-linkedin"></i>
-                    </div>
                     <p class="copyright">&copy; <span id="current-year"></span> BRUUT INC.</p>
                 </div>
             </div>

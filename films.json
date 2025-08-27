@@ -1,37 +1,37 @@
 {
   "films": [
     {
-      "id": "whats-your-story",
-      "title": "What's Your Story?",
-      "image": "whats-your-story.webp",
+      "id": "de-dodendraad",
+      "title": "De Dodendraad",
+      "image": "de-dodendraad.webp",
       "description": "A compelling narrative exploring personal stories and human connections in contemporary society.",
-      "director": "BRUUT Collective",
-      "writer": "BRUUT Collective",
+      "director": "Kasper Mols",
+      "writer": "Carmen Cortvriendt",
       "starring": "Various Artists",
-      "releaseDate": "2023",
-      "url": "whats-your-story"
+      "releaseDate": "2025",
+      "url": "de-dodendraad"
     },
     {
-      "id": "way-of-the-ninja",
-      "title": "Way of the Ninja",
-      "image": "way-of-the-ninja.webp",
+      "id": "billies-tale",
+      "title": "Billie's Tale",
+      "image": "billies-tale.webp",
       "description": "An artistic exploration of discipline, mastery, and the ancient path of the ninja in modern times.",
-      "director": "BRUUT Collective",
-      "writer": "BRUUT Collective",
-      "starring": "International Cast",
-      "releaseDate": "2022",
-      "url": "way-of-the-ninja"
+      "director": "Kasper Mols & Rutger-Jan Cleiren",
+      "writer": "Carmen Cortvriendt",
+      "starring": "Loes Venken",
+      "releaseDate": "2025",
+      "url": "billies-tale"
     },
     {
-      "id": "floating-on-the-river",
-      "title": "Einar Bjartur – Floating on the River",
-      "image": "floating-on-the-river.webp",
-      "description": "A meditative journey through landscapes and emotions, featuring the work of Einar Bjartur.",
-      "director": "BRUUT Collective",
-      "writer": "Einar Bjartur, BRUUT Collective",
-      "starring": "Einar Bjartur",
-      "releaseDate": "2021",
-      "url": "floating-on-the-river"
+      "id": "de-chanoekia",
+      "title": "De Chanoekia",
+      "image": "de-chanoekia.webp",
+      "description": "An artistic exploration of discipline, mastery, and the ancient path of the ninja in modern times.",
+      "director": "Frank Herrebout",
+      "writer": "Frank Herrebout",
+      "starring": "div",
+      "releaseDate": "2025",
+      "url": "de-chanoekia"
     },
     {
       "id": "de-droom-van-een-elfenzang",
