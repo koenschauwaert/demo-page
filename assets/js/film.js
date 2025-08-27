@@ -66,7 +66,9 @@ function displayFilm() {
     
     document.querySelector('.film-title').textContent = film.title;
     
-    document.getElementById('film-desc').textContent = film.description;
+    // Convert \n to <br> tags and use innerHTML instead of textContent
+    document.getElementById('film-desc').innerHTML = film.description.replace(/\n/g, '<br>');
+    
     document.getElementById('film-director').textContent = film.director;
     document.getElementById('film-writer').textContent = film.writer;
     document.getElementById('film-cast').textContent = film.starring;
