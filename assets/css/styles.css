@@ -71,23 +71,23 @@ body {
     overflow: hidden;
 }
 
-/* Hero Image Layer - Fixed Full Width Slides */
+/* Hero Image Layer - Dynamic Width Based on Film Count */
 .hero-carousel {
     position: absolute;
     top: 0;
     left: 0;
-    width: 700%; /* 7 slides for infinite effect */
     height: 100%;
     display: flex;
     transition: transform 1s ease-in-out;
     z-index: 1;
+    /* Width and slide widths will be set dynamically by JavaScript */
 }
 
 .hero-slide {
-    width: calc(100% / 7); /* Each slide exactly 1/7 of total width */
     height: 100%;
     position: relative;
     flex-shrink: 0;
+    /* Width will be set dynamically by JavaScript */
 }
 
 .hero-image,

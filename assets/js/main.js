@@ -390,10 +390,17 @@ function createImageCarousel() {
     const carousel = document.createElement('div');
     carousel.className = 'hero-carousel';
     
+    // Calculate total slides: 1 clone at start + original films + 2 clones at end
+    const totalSlides = filmsData.length + 3;
+    
+    // Set dynamic carousel width (total slides * 100%)
+    carousel.style.width = `${totalSlides * 100}%`;
+    
     // Add clone of last slide at beginning
     const lastFilm = filmsData[filmsData.length - 1];
     const firstClone = document.createElement('div');
     firstClone.className = 'hero-slide clone';
+    firstClone.style.width = `${100 / totalSlides}%`;
     firstClone.innerHTML = `<div class="hero-image" style="background-image: url('assets/images/${lastFilm.image}')"></div>`;
     carousel.appendChild(firstClone);
     
@@ -401,6 +408,7 @@ function createImageCarousel() {
     filmsData.forEach((film, index) => {
         const slide = document.createElement('div');
         slide.className = 'hero-slide';
+        slide.style.width = `${100 / totalSlides}%`;
         slide.innerHTML = `<div class="hero-image" style="background-image: url('assets/images/${film.image}')"></div>`;
         carousel.appendChild(slide);
     });
@@ -410,6 +418,7 @@ function createImageCarousel() {
         const film = filmsData[i];
         const clone = document.createElement('div');
         clone.className = 'hero-slide clone';
+        clone.style.width = `${100 / totalSlides}%`;
         clone.innerHTML = `<div class="hero-image" style="background-image: url('assets/images/${film.image}')"></div>`;
         carousel.appendChild(clone);
     }
@@ -424,6 +433,8 @@ function createImageCarousel() {
     const titleOverlay = document.createElement('div');
     titleOverlay.className = 'title-overlay';
     heroSection.appendChild(titleOverlay);
+    
+    console.log(`Created carousel with ${totalSlides} total slides (${filmsData.length} films + 3 clones)`);
 }
 
 // Create infinite title track with simple HTML tooltips
@@ -513,9 +524,14 @@ function updateImageCarousel(withTransition = true) {
         imageCarousel.style.transition = 'none';
     }
     
+    // Calculate translation based on actual number of slides
     const totalSlides = filmsData.length + 3;
-    const translateX = -(currentFilmIndex * (100 / totalSlides));
+    const slideWidthPercent = 100 / totalSlides;
+    const translateX = -(currentFilmIndex * slideWidthPercent);
+    
     imageCarousel.style.transform = `translateX(${translateX}%)`;
+    
+    console.log(`Moving to slide ${currentFilmIndex}, translateX: ${translateX}%`);
     
     // Handle infinite loop for images
     if (withTransition) {
