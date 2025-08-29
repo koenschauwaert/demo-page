@@ -6,6 +6,7 @@
     <title id="page-title">Film - BRUUT INC.</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://use.typekit.net/lrf3vhs.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -13,7 +14,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <img src="assets/images/bruut-logo.webp" alt="BRUUT INC." height="30">
+                <img src="assets/images/bruut-logo.webp" alt="BRUUT INC." height="40">
             </a>
         </div>
     </nav>
@@ -26,13 +27,16 @@
             <div class="container-fluid">
                 <div class="row align-items-end h-100">
                     <div class="col-12">
-                        <h1 class="film-title"></h1>
+                        <!-- Film title will be created by JavaScript to match homepage structure -->
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Trailer play button will be added here by JavaScript -->
     </section>
 
+    <!-- Rest of your film.html remains the same... -->
+    
     <!-- Film Details Section -->
     <section id="film-details" class="py-5 bg-dark text-white">
         <div class="container">
@@ -43,23 +47,36 @@
                         <p id="film-desc"></p>
                     </div>
                 </div>
+                
                 <div class="col-lg-4">
                     <div class="film-info">
-                        <div class="info-item mb-3">
+                        <div id="duration-item" class="info-item mb-3" style="display: none;">
+                            <strong>Duration:</strong>
+                            <span id="film-duration"></span>
+                        </div>
+                        <div id="release-item" class="info-item mb-3" style="display: none;">
+                            <strong>Release Date:</strong>
+                            <span id="film-release"></span>
+                        </div>
+                        <div id="director-item" class="info-item mb-3" style="display: none;">
                             <strong>Directed by:</strong>
                             <span id="film-director"></span>
                         </div>
-                        <div class="info-item mb-3">
+                        <div id="writer-item" class="info-item mb-3" style="display: none;">
                             <strong>Written by:</strong>
                             <span id="film-writer"></span>
                         </div>
-                        <div class="info-item mb-3">
+                        <div id="production-item" class="info-item mb-3" style="display: none;">
+                            <strong>Production:</strong>
+                            <span id="film-production"></span>
+                        </div>
+                        <div id="cinematography-item" class="info-item mb-3" style="display: none;">
+                            <strong>Cinematography:</strong>
+                            <span id="film-cinematography"></span>
+                        </div>
+                        <div id="cast-item" class="info-item mb-3" style="display: none;">
                             <strong>Starring:</strong>
                             <span id="film-cast"></span>
-                        </div>
-                        <div class="info-item mb-3">
-                            <strong>Release Date:</strong>
-                            <span id="film-release"></span>
                         </div>
                     </div>
                 </div>
@@ -79,11 +96,10 @@
                 <div class="col-12">
                     <h3 class="mb-3">Aesthetic. Defiant. Wild.</h3>
                     <div class="footer-divider mb-3"></div>
-                    <h4 class="mb-4">hello@bruut.co</h4>
+                    <h4 class="mb-4">
+                        <a href="mailto:hello@bruut.co" class="email-link">hello@bruut.co</a>
+                    </h4>
                     <div class="footer-divider mb-4"></div>
-                    <div class="linkedin-icon mb-4">
-                        <i class="bi bi-linkedin"></i>
-                    </div>
                     <p class="copyright">&copy; <span id="current-year"></span> BRUUT INC.</p>
                 </div>
             </div>

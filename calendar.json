@@ -1,0 +1,76 @@
+{
+  "showtimes": [
+    {
+      "filmTitle": "BILLIE'S TALE",
+      "date": "2025-09-13",
+      "time": "17:15",
+      "venue": "FILM BY THE SEA",
+      "description": "Voorfilm Opening Zeeuws Licht - PATHE ZAAL 4 - VLISSINGEN",
+      "ticketUrl": "https://www.filmbythesea.nl/voorstellingen/films/5821-opening-zeeuws-licht-zeemansvrouwen-een-soort-vrijheid"
+    },
+    {
+      "filmTitle": "DE DODENDRAAD",
+      "date": "2025-09-16",
+      "time": "17:15",
+      "venue": "FILM BY THE SEA",
+      "description": "Zeeuws Licht - CineBlok Docu 1 - PATHE ZAAL 1 - VLISSINGEN",
+      "ticketUrl": "https://www.filmbythesea.nl/voorstellingen/films/5801-zeeuws-licht-cineblok-docu-1"
+    },
+    {
+      "filmTitle": "SHARPED-TONGUED",
+      "date": "2025-09-17",
+      "time": "15:00",
+      "venue": "FILM BY THE SEA",
+      "description": "Zeeuws Licht - CineBlok Fictie 2 - PATHE ZAAL 5 - VLISSINGEN",
+      "ticketUrl": "https://www.filmbythesea.nl/voorstellingen/films/5807-zeeuws-licht-cineblok-fictie-2"
+    },
+    {
+      "filmTitle": "DE CHANOEKIA",
+      "date": "2025-09-18",
+      "time": "20:00",
+      "venue": "SCHELDETHEATER TERNEUZEN",
+      "description": "",
+      "ticketUrl": "http://www.chanoekia.akfe.nl"
+    },
+    {
+      "filmTitle": "DE CHANOEKIA",
+      "date": "2025-09-19",
+      "time": "17:00",
+      "venue": "FILM BY THE SEA",
+      "description": "Zeeuws Licht - PATHE ZAAL 1 - VLISSINGEN",
+      "ticketUrl": "https://www.filmbythesea.nl/voorstellingen/films/5686-chanoekia-de"
+    },
+    {
+      "filmTitle": "DE DODENDRAAD",
+      "date": "2025-09-20",
+      "time": "09:00",
+      "venue": "FILM BY THE SEA",
+      "description": "Zeeuws Licht - CineBlok Docu 1 - PATHE ZAAL 2 - VLISSINGEN",
+      "ticketUrl": "https://www.filmbythesea.nl/voorstellingen/films/5801-zeeuws-licht-cineblok-docu-1"
+    },
+    {
+      "filmTitle": "SHARPED-TONGUED",
+      "date": "2025-09-20",
+      "time": "09:15",
+      "venue": "FILM BY THE SEA",
+      "description": "Zeeuws Licht - CineBlok Fictie 2 - PATHE ZAAL 1 - VLISSINGEN",
+      "ticketUrl": "https://www.filmbythesea.nl/voorstellingen/films/5807-zeeuws-licht-cineblok-fictie-2"
+    },
+    {
+      "filmTitle": "DE CHANOEKIA",
+      "date": "2025-09-20",
+      "time": "16:00",
+      "venue": "FILM BY THE SEA",
+      "description": "Zeeuws Licht - PATHE ZAAL 5 - VLISSINGEN",
+      "ticketUrl": "https://www.filmbythesea.nl/voorstellingen/films/5686-chanoekia-de"
+    },
+    {
+      "filmTitle": "DE DODENDRAAD",
+      "date": "2025-10-03",
+      "time": "19:00",
+      "venue": "CINEMA BRUUTSTERDAM",
+      "description": "",
+      "ticketUrl": "https://bruutsterdam.nl/product/dedodendraad/"
+    }
+  ]
+}

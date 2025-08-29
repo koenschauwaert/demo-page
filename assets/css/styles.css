@@ -1,6 +1,13 @@
+@font-face {
+  font-family: 'bungee-outline';
+  src: url('/assets/fonts/bungee-outline.woff2') format('woff2'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Variables */
 :root {
-    --yellow: #fefc1b;
+    --yellow: #FEFC1B;
     --black: #000000;
 }
 
@@ -12,10 +19,14 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #000;
+    font-family: "gineso", sans-serif;
+    background-color: var(--yellow);
     color: #fff;
     overflow-x: hidden;
+}
+
+body.trailer-modal-open {
+    overflow: hidden;
 }
 
 /* Navbar with constrained width */
@@ -28,40 +39,35 @@ body {
 
 .navbar.scrolled {
     background: transparent !important;
-    /*
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    */
 }
 
 .navbar .container-fluid {
     width: 100%;
     max-width: none;
     padding-left: 0;
-    padding-right: 150px; /* Space from right edge */
-    justify-content: flex-end !important; /* Push content to right */
+    padding-right: 8%; /* Use percentage instead of fixed px */
+    justify-content: flex-end !important;
 }
 
 .navbar-brand {
     background-color: var(--yellow);    
-    padding: 8px 12px; /* Padding around logo */
+    padding: 8px 12px;
     margin: 0;
     transition: all 0.3s ease;
 }
 
 .navbar-brand:hover {
-    background-color: var(--black); /* Slightly darker yellow on hover */
+    background-color: var(--black);
 }
 
 .navbar-brand img {
-    filter: brightness(0); /* Make logo black on yellow background */
+    filter: brightness(0);
     height: 50px;
     display: block;
 }
 
 .navbar-brand img:hover {
-    filter: invert(100); /* Make logo black on yellow background */
+    filter: invert(100);
 }
 
 /* Hero Section - Two Independent Layers */
@@ -80,14 +86,12 @@ body {
     display: flex;
     transition: transform 1s ease-in-out;
     z-index: 1;
-    /* Width and slide widths will be set dynamically by JavaScript */
 }
 
 .hero-slide {
     height: 100%;
     position: relative;
     flex-shrink: 0;
-    /* Width will be set dynamically by JavaScript */
 }
 
 .hero-image,
@@ -120,6 +124,7 @@ body {
     z-index: 3;
 }
 
+/* Film page: Title positioning */
 .hero-content {
     position: absolute;
     top: 0;
@@ -129,17 +134,31 @@ body {
     z-index: 4;
     display: flex;
     align-items: flex-end;
-    padding-bottom: 80px;
+    padding: 0;
 }
 
-/* Independent Title Layer - Absolute to hero section */
+.hero-content .container-fluid,
+.hero-content .row,
+.hero-content .col-12 {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+}
+
+.hero-content .col-12 {
+    margin-bottom: 30px; /* 30px from bottom - SAME as homepage */
+    margin-left: 20px;   /* 20px from left - SAME as homepage */
+}
+
+/* Homepage: Title container positioning */
 .hero-titles-container {
     position: absolute;
-    bottom: 0px;
-    left: 0;
+    bottom: 30px; /* 30px from bottom */
+    left: 20px;   /* 20px from left */
     right: 0;
-    height: 120px;
-    overflow: visible; /* Changed from hidden to visible for tooltips */
+    height: auto;
+    overflow: visible;
     z-index: 5;
 }
 
@@ -147,10 +166,34 @@ body {
     display: flex;
     align-items: baseline;
     gap: 80px;
-    height: 100%;
     transition: transform 1s ease-in-out;
     position: relative;
-    padding-left: 50px;
+    padding: 0;
+}
+
+/* IDENTICAL styling for both title types */
+.title-text,
+.film-title {
+    font-size: 3.5rem !important;
+    font-weight: bold !important;
+    color: white !important;
+    line-height: 1.2 !important;
+    margin: 10px !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    display: block !important;
+    border: none !important;
+    outline: none !important;
+}
+
+/* Homepage specific styling */
+.title-text {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.title-text:hover {
+    color: var(--yellow);
 }
 
 .title-item {
@@ -171,7 +214,7 @@ body {
     opacity: 1.0;
 }
 
-/* Simple tooltip - hidden by default */
+/* Tooltip */
 .title-tooltip {
     position: absolute;
     bottom: 100%;
@@ -183,27 +226,11 @@ body {
     font-weight: normal;
     white-space: nowrap;
     z-index: 1000;
-    display: none; /* Hidden by default */
+    display: none;
 }
 
-/* Show tooltip on hover */
 .title-item:hover .title-tooltip {
-    display: block; /* Show on hover */
-}
-
-.title-text {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: color 0.3s ease;
     display: block;
-}
-
-/* Hover effect - yellow color */
-.title-text:hover {
-    color: var(--yellow);
 }
 
 /* Active/current title styling */
@@ -215,19 +242,11 @@ body {
     opacity: 0.5;
 }
 
-.film-title {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: white;
-    padding-left: 50px;
-}
-
 /* Stay Updated Section */
 #stay-updated {
     background-color: #1a1a1a;
 }
 
-/* Updated Social Links - Single LinkedIn */
 .social-links {
     display: flex;
     justify-content: center;
@@ -271,7 +290,7 @@ body {
 
 /* Three Columns Section */
 .column-section {
-    min-height: 80vh;
+    min-height: 50vh;
     border-right: 1px solid #333;
     position: relative;
 }
@@ -286,10 +305,11 @@ body {
 }
 
 .column-letter {
-    font-size: 8rem;
+    font-family: "bungee-outline", sans-serif;
+    font-size: 12rem;
     font-weight: 100;
-    color: rgba(255, 255, 255, 0.1);
-    margin-bottom: -40px;
+    color: rgba(255, 255, 255, 0.2);
+    margin-bottom: -100px;
     position: relative;
     z-index: 1;
 }
@@ -333,16 +353,121 @@ body {
     z-index: 1;
 }
 
-/* Film Details */
+/* Film page specific styles */
 .film-info .info-item {
     border-bottom: 1px solid #333;
     padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.film-info .info-item:last-child {
+    border-bottom: none;
 }
 
 .film-info .info-item strong {
     display: block;
     margin-bottom: 5px;
     color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.film-info .info-item span {
+    color: white;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+#film-desc {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Trailer Play Button with SVG */
+.trailer-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    z-index: 6;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.trailer-play-button:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    filter: drop-shadow(0 0 20px var(--yellow)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+.trailer-play-button svg {
+    width: 100%;
+    height: 100%;
+    fill: white;
+    transition: fill 0.3s ease;
+}
+
+.trailer-play-button:hover svg {
+    fill: white;
+}
+
+/* Trailer Modal Overlay */
+.trailer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.trailer-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.trailer-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.trailer-modal.active .trailer-modal-content {
+    transform: scale(1);
+}
+
+.trailer-iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+.trailer-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 /* Footer */
@@ -366,9 +491,17 @@ footer {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Ensure loading screen can be hidden when needed */
+/* Loading screen styles */
 #loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50000;
     display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 #loading-screen.force-hide {
@@ -377,7 +510,6 @@ footer {
     visibility: hidden !important;
 }
 
-/* Yellow background layer */
 .loading-yellow-bg {
     position: absolute;
     top: 0;
@@ -385,11 +517,10 @@ footer {
     width: 100%;
     height: 100%;
     background-color: var(--yellow);
-    z-index: 10002;
+    z-index: 50003;
     animation: slideUpYellow 2s ease-in-out forwards;
 }
 
-/* Glass layer */
 .loading-glass-layer {
     position: absolute;
     top: 0;
@@ -399,106 +530,81 @@ footer {
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    z-index: 10001;
+    z-index: 50002;
     opacity: 1;
     animation: showGlass 2s ease-in-out forwards;
+    pointer-events: none;
 }
 
-/* Logo layer */
 .loading-logo {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 10003;
+    z-index: 50004;
     animation: fadeOutLogo 2s ease-in-out forwards;
 }
 
 .loading-logo img {
     width: 120px;
     height: auto;
-    filter: brightness(0); /* Black logo on yellow background */
+    filter: brightness(0);
 }
 
-/* Animations */
 @keyframes slideUpYellow {
-    0% {
-        transform: translateY(0);
-    }
-    25% {
-        transform: translateY(0); /* Stay for 500ms */
-    }
-    100% {
-        transform: translateY(-100%); /* Slide up in remaining 1500ms */
-    }
+    0% { transform: translateY(0); }
+    25% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
 }
 
 @keyframes showGlass {
-    0% {
-        opacity: 1;
-    }
-    25% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 1; /* Show glass as yellow slides up */
-    }
-    100% {
-        opacity: 0; /* Fade out glass effect */
-    }
+    0% { opacity: 1; }
+    25% { opacity: 1; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 @keyframes fadeOutLogo {
-    0% {
-        opacity: 1;
-    }
-    75% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+    0% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
-/* Hide loading screen after animation */
+body.loading #loading-screen {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
 #loading-screen.loaded {
-    display: none;
-}
-
-/* Initial page state - hidden during loading */
-body.loading {
-    overflow: hidden;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
 body.loading .navbar,
 body.loading .hero-section,
 body.loading #stay-updated,
 body.loading #three-columns,
+body.loading #film-details,
 body.loading footer {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: none;
 }
 
-/* Ensure page content is visible when loaded */
 body.loaded .navbar,
 body.loaded .hero-section,
 body.loaded #stay-updated,
 body.loaded #three-columns,
+body.loaded #film-details,
 body.loaded footer {
-    opacity: 1;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* Navigation Glass Overlay with CSS Animations */
-/* Immediate black overlay for internal navigation */
-.internal-navigation-loading {
-    background: #000 !important;
-}
-
-.internal-navigation-loading * {
-    opacity: 0 !important;
-}
-
-/* Enhanced Navigation System with Slower Transitions */
+/* Navigation Glass Overlay */
 .black-overlay {
     position: fixed;
     top: 0;
@@ -543,109 +649,88 @@ body.loaded footer {
     visibility: hidden;
 }
 
-/* Smooth page blur for outgoing transitions */
-.page-transitioning .hero-section,
-.page-transitioning .navbar,
-.page-transitioning #stay-updated,
-.page-transitioning #three-columns,
-.page-transitioning footer {
-    animation: pageBlurOut 0.8s ease-out forwards;
+/* Welcome message styling */
+.welcome-message {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    line-height: 1;
+    font-size: 7.0rem;
+    font-weight: bold;
+    z-index: 6;
 }
 
-@keyframes pageBlurOut {
-    0% {
-        opacity: 1;
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0.3;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        transform: scale(1.02);
-    }
+/* Showtimes section styling */
+.showtimes-section {
+    background-color: #1a1a1a;
+    border-top: 1px solid #333;
 }
 
-@keyframes glassAppearSmooth {
-    0% {
-        opacity: 0;
-        visibility: hidden;
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-    }
-    1% {
-        visibility: visible;
-    }
-    100% {
-        opacity: 1;
-        visibility: visible;
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-    }
+.showtime-item {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
 }
 
-@keyframes glassDisappearSmooth {
-    0% {
-        opacity: 1;
-        visibility: visible;
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-    }
-    99% {
-        visibility: visible;
-    }
-    100% {
-        opacity: 0;
-        visibility: hidden;
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-    }
+.showtime-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
-@keyframes pageBlur {
-    0% {
-        opacity: 1;
-        visibility: visible;
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-        transform: scale(1);
-    }
-    1% {
-        visibility: visible;
-    }
-    100% {
-        opacity: 0.7;
-        visibility: visible;
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
-        transform: scale(1.02);
-    }
+.showtime-item h3 {
+    color: var(--yellow);
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
 }
 
-/* Responsive Design */
+.showtime-item h4 {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.showtime-item p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0;
+}
+
+.showtime-item a {
+    color: var(--yellow);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.showtime-item a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Responsive Design - Clean and Simple */
 @media (max-width: 992px) {
+    .navbar .container-fluid {
+        padding-right: 5%;
+    }
+    
+    .hero-titles-container {
+        bottom: 25px !important;
+        left: 15px !important;
+    }
+    
+    .hero-content .col-12 {
+        margin-bottom: 25px !important;
+        margin-left: 15px !important;
+    }
+    
     .hero-titles-track {
         gap: 60px;
-        padding-left: 30px;
     }
     
-    .title-text {
-        font-size: 2.5rem;
-    }
-    
-    .title-tooltip {
-        font-size: 0.9rem;
-        padding: 5px 10px;
-    }
-    
+    .title-text,
     .film-title {
-        font-size: 2.5rem;
-        padding-left: 30px;
+        font-size: 2.5rem !important;
     }
     
     .column-section {
-        min-height: 60vh;
+        min-height: 40vh;
         border-right: none;
         border-bottom: 1px solid #333;
     }
@@ -662,47 +747,45 @@ body.loaded footer {
         font-size: 2rem;
     }
     
-    .social-links {
-        flex-direction: column;
-        gap: 20px;
+    .welcome-message {
+        font-size: 4rem;
+        top: 100px;
+        left: 30px;
     }
 }
 
 @media (max-width: 768px) {
-    .loading-logo img {
-        width: 80px;
+    .navbar .container-fluid {
+        padding-right: 4%;
     }
-
+    
     .hero-titles-container {
-        bottom: 60px;
-        height: 100px;
+        bottom: 20px !important;
+        left: 10px !important;
+    }
+    
+    .hero-content .col-12 {
+        margin-bottom: 20px !important;
+        margin-left: 10px !important;
     }
     
     .hero-titles-track {
         gap: 40px;
-        padding-left: 20px;
     }
     
-    .title-text {
-        font-size: 2rem;
-    }
-    
-    .title-tooltip {
-        font-size: 0.8rem;
-        padding: 4px 8px;
-    }
-    
+    .title-text,
     .film-title {
-        font-size: 2rem;
-        padding-left: 20px;
+        font-size: 2rem !important;
     }
     
-    .hero-content {
-        padding-bottom: 60px;
+    .column-section {
+        min-height: 30vh;
     }
-
+    
     .social-links {
         margin-top: 20px;
+        flex-direction: column;
+        gap: 20px;
     }
     
     .social-link {
@@ -710,33 +793,40 @@ body.loaded footer {
         font-size: 1rem;
     }
     
-    .social-link i {
-        font-size: 1.3rem;
+    .trailer-play-button {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .welcome-message {
+        font-size: 4rem;
+        top: 80px;
+        left: 20px;
     }
 }
 
 @media (max-width: 576px) {
-    .loading-logo img {
-        width: 60px;
+    .navbar .container-fluid {
+        padding-right: 3%;
     }
-
+    
+    .hero-titles-container {
+        bottom: 15px !important;
+        left: 8px !important;
+    }
+    
+    .hero-content .col-12 {
+        margin-bottom: 15px !important;
+        margin-left: 8px !important;
+    }
+    
     .hero-titles-track {
         gap: 30px;
-        padding-left: 15px;
     }
     
-    .title-text {
-        font-size: 1.5rem;
-    }
-    
-    .title-tooltip {
-        font-size: 0.7rem;
-        padding: 3px 6px;
-    }
-    
+    .title-text,
     .film-title {
-        font-size: 1.5rem;
-        padding-left: 15px;
+        font-size: 1.5rem !important;
     }
     
     .column-letter {
@@ -745,5 +835,16 @@ body.loaded footer {
     
     .column-title {
         font-size: 1.5rem;
+    }
+    
+    .trailer-play-button {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .welcome-message {
+        font-size: 3rem;
+        top: 70px;
+        left: 15px;
     }
 }
