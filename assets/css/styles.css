@@ -1,17 +1,8 @@
-@font-face {
-  font-family: 'bungee-outline';
-  src: url('/assets/fonts/bungee-outline.woff2') format('woff2'); 
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* Variables */
 :root {
     --yellow: #FEFC1B;
     --black: #000000;
 }
 
-/* Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -29,7 +20,6 @@ body.trailer-modal-open {
     overflow: hidden;
 }
 
-/* Navbar with constrained width */
 .navbar {
     background: transparent !important;
     z-index: 1000;
@@ -45,7 +35,7 @@ body.trailer-modal-open {
     width: 100%;
     max-width: none;
     padding-left: 0;
-    padding-right: 8%; /* Use percentage instead of fixed px */
+    padding-right: 8%; 
     justify-content: flex-end !important;
 }
 
@@ -70,14 +60,12 @@ body.trailer-modal-open {
     filter: invert(100);
 }
 
-/* Hero Section - Two Independent Layers */
 .hero-section {
     height: 100vh;
     position: relative;
     overflow: hidden;
 }
 
-/* Hero Image Layer - Dynamic Width Based on Film Count */
 .hero-carousel {
     position: absolute;
     top: 0;
@@ -113,7 +101,6 @@ body.trailer-modal-open {
     z-index: 2;
 }
 
-/* Title Overlay - Separate Layer */
 .title-overlay {
     position: absolute;
     top: 0;
@@ -124,7 +111,6 @@ body.trailer-modal-open {
     z-index: 3;
 }
 
-/* Film page: Title positioning */
 .hero-content {
     position: absolute;
     top: 0;
@@ -147,15 +133,14 @@ body.trailer-modal-open {
 }
 
 .hero-content .col-12 {
-    margin-bottom: 30px; /* 30px from bottom - SAME as homepage */
-    margin-left: 20px;   /* 20px from left - SAME as homepage */
+    margin-bottom: 30px; 
+    margin-left: 20px;   
 }
 
-/* Homepage: Title container positioning */
 .hero-titles-container {
     position: absolute;
-    bottom: 30px; /* 30px from bottom */
-    left: 20px;   /* 20px from left */
+    bottom: 30px; 
+    left: 20px;   
     right: 0;
     height: auto;
     overflow: visible;
@@ -171,7 +156,6 @@ body.trailer-modal-open {
     padding: 0;
 }
 
-/* IDENTICAL styling for both title types */
 .title-text,
 .film-title {
     font-size: 3.5rem !important;
@@ -186,7 +170,6 @@ body.trailer-modal-open {
     outline: none !important;
 }
 
-/* Homepage specific styling */
 .title-text {
     cursor: pointer;
     transition: color 0.3s ease;
@@ -214,11 +197,10 @@ body.trailer-modal-open {
     opacity: 1.0;
 }
 
-/* Tooltip */
 .title-tooltip {
     position: absolute;
     bottom: 100%;
-    left: 0;
+    left: 10px;
     padding-left: 4px;
     margin-bottom: -16px;
     color: white;
@@ -233,7 +215,6 @@ body.trailer-modal-open {
     display: block;
 }
 
-/* Active/current title styling */
 .title-item.current .title-text {
     opacity: 1;
 }
@@ -242,7 +223,6 @@ body.trailer-modal-open {
     opacity: 0.5;
 }
 
-/* Stay Updated Section */
 #stay-updated {
     background-color: #1a1a1a;
 }
@@ -276,7 +256,6 @@ body.trailer-modal-open {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Email Link Styling */
 .email-link {
     color: white;
     text-decoration: none;
@@ -288,7 +267,6 @@ body.trailer-modal-open {
     text-decoration: underline;
 }
 
-/* Three Columns Section */
 .column-section {
     min-height: 50vh;
     border-right: 1px solid #333;
@@ -305,7 +283,7 @@ body.trailer-modal-open {
 }
 
 .column-letter {
-    font-family: "bungee-outline", sans-serif;
+    font-family: "Bungee Outline", sans-serif;
     font-size: 12rem;
     font-weight: 100;
     color: rgba(255, 255, 255, 0.2);
@@ -353,7 +331,6 @@ body.trailer-modal-open {
     z-index: 1;
 }
 
-/* Film page specific styles */
 .film-info .info-item {
     border-bottom: 1px solid #333;
     padding-bottom: 10px;
@@ -385,7 +362,6 @@ body.trailer-modal-open {
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* Trailer Play Button with SVG */
 .trailer-play-button {
     position: absolute;
     top: 50%;
@@ -415,7 +391,6 @@ body.trailer-modal-open {
     fill: white;
 }
 
-/* Trailer Modal Overlay */
 .trailer-modal {
     position: fixed;
     top: 0;
@@ -470,7 +445,6 @@ body.trailer-modal-open {
     border: none;
 }
 
-/* Footer */
 footer {
     background-color: #000 !important;
 }
@@ -491,7 +465,6 @@ footer {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Loading screen styles */
 #loading-screen {
     position: fixed;
     top: 0;
@@ -604,7 +577,6 @@ body.loaded footer {
     transition: opacity 0.5s ease-in-out;
 }
 
-/* Navigation Glass Overlay */
 .black-overlay {
     position: fixed;
     top: 0;
@@ -649,7 +621,6 @@ body.loaded footer {
     visibility: hidden;
 }
 
-/* Welcome message styling */
 .welcome-message {
     position: absolute;
     top: 50px;
@@ -660,7 +631,6 @@ body.loaded footer {
     z-index: 6;
 }
 
-/* Showtimes section styling */
 .showtimes-section {
     background-color: #1a1a1a;
     border-top: 1px solid #333;
@@ -704,49 +674,48 @@ body.loaded footer {
     text-decoration: underline;
 }
 
-/* Responsive Design - Clean and Simple */
 @media (max-width: 992px) {
     .navbar .container-fluid {
         padding-right: 5%;
     }
-    
+
     .hero-titles-container {
         bottom: 25px !important;
         left: 15px !important;
     }
-    
+
     .hero-content .col-12 {
         margin-bottom: 25px !important;
         margin-left: 15px !important;
     }
-    
+
     .hero-titles-track {
         gap: 60px;
     }
-    
+
     .title-text,
     .film-title {
         font-size: 2.5rem !important;
     }
-    
+
     .column-section {
         min-height: 40vh;
         border-right: none;
         border-bottom: 1px solid #333;
     }
-    
+
     .column-section:last-child {
         border-bottom: none;
     }
-    
+
     .column-letter {
         font-size: 6rem;
     }
-    
+
     .column-title {
         font-size: 2rem;
     }
-    
+
     .welcome-message {
         font-size: 4rem;
         top: 100px;
@@ -758,46 +727,46 @@ body.loaded footer {
     .navbar .container-fluid {
         padding-right: 4%;
     }
-    
+
     .hero-titles-container {
         bottom: 20px !important;
         left: 10px !important;
     }
-    
+
     .hero-content .col-12 {
         margin-bottom: 20px !important;
         margin-left: 10px !important;
     }
-    
+
     .hero-titles-track {
         gap: 40px;
     }
-    
+
     .title-text,
     .film-title {
         font-size: 2rem !important;
     }
-    
+
     .column-section {
         min-height: 30vh;
     }
-    
+
     .social-links {
         margin-top: 20px;
         flex-direction: column;
         gap: 20px;
     }
-    
+
     .social-link {
         padding: 8px 16px;
         font-size: 1rem;
     }
-    
+
     .trailer-play-button {
         width: 60px;
         height: 60px;
     }
-    
+
     .welcome-message {
         font-size: 4rem;
         top: 80px;
@@ -809,39 +778,39 @@ body.loaded footer {
     .navbar .container-fluid {
         padding-right: 3%;
     }
-    
+
     .hero-titles-container {
         bottom: 15px !important;
         left: 8px !important;
     }
-    
+
     .hero-content .col-12 {
         margin-bottom: 15px !important;
         margin-left: 8px !important;
     }
-    
+
     .hero-titles-track {
         gap: 30px;
     }
-    
+
     .title-text,
     .film-title {
         font-size: 1.5rem !important;
     }
-    
+
     .column-letter {
         font-size: 4rem;
     }
-    
+
     .column-title {
         font-size: 1.5rem;
     }
-    
+
     .trailer-play-button {
         width: 50px;
         height: 50px;
     }
-    
+
     .welcome-message {
         font-size: 3rem;
         top: 70px;

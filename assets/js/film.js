@@ -1,13 +1,11 @@
 let filmsData = [];
 
-// Check if coming from internal navigation via URL parameter
 function isInternalNavigation() {
     const urlParams = new URLSearchParams(window.location.search);
     const fromInternal = urlParams.get('from') === 'internal';
     
     console.log('Film page - checking URL params:', fromInternal);
     
-    // Clean up URL without page reload (keep the film parameter)
     if (fromInternal) {
         const filmParam = urlParams.get('film');
         if (filmParam) {
@@ -19,7 +17,6 @@ function isInternalNavigation() {
     return fromInternal;
 }
 
-// Load films data from JSON
 async function loadFilmsData() {
     try {
         const response = await fetch('films.json');
@@ -32,12 +29,10 @@ async function loadFilmsData() {
     }
 }
 
-// Helper function to check if a field has content
 function hasContent(value) {
     return value && value.trim() !== '' && value.toLowerCase() !== 'to be announced' && value.toLowerCase() !== 'tba';
 }
 
-// Helper function to show/hide info items
 function toggleInfoItem(itemId, elementId, value) {
     const item = document.getElementById(itemId);
     const element = document.getElementById(elementId);
@@ -50,11 +45,9 @@ function toggleInfoItem(itemId, elementId, value) {
     }
 }
 
-// Helper function to convert YouTube URL to embed URL
 function getYouTubeEmbedUrl(url) {
     if (!url) return null;
     
-    // Extract video ID from various YouTube URL formats
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     
@@ -65,7 +58,6 @@ function getYouTubeEmbedUrl(url) {
     return null;
 }
 
-// Create trailer play button with SVG
 function createTrailerPlayButton(trailerUrl) {
     const heroSection = document.querySelector('#film-header');
     
@@ -74,12 +66,10 @@ function createTrailerPlayButton(trailerUrl) {
         return;
     }
     
-    // Create play button container
     const playButton = document.createElement('div');
     playButton.className = 'trailer-play-button';
     playButton.setAttribute('data-trailer-url', trailerUrl);
     
-    // Load SVG
     fetch('assets/images/play-button.svg')
         .then(response => response.text())
         .then(svgContent => {
@@ -87,22 +77,18 @@ function createTrailerPlayButton(trailerUrl) {
         })
         .catch(error => {
             console.error('Error loading play button SVG:', error);
-            // Fallback to CSS triangle if SVG fails
             playButton.innerHTML = '<div style="width: 0; height: 0; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 4px;"></div>';
         });
     
-    // Add click event
     playButton.addEventListener('click', () => openTrailerModal(trailerUrl));
     
     heroSection.appendChild(playButton);
 }
 
-// Open trailer modal (removed close button)
 function openTrailerModal(trailerUrl) {
     const embedUrl = getYouTubeEmbedUrl(trailerUrl);
     if (!embedUrl) return;
     
-    // Create modal without close button
     const modal = document.createElement('div');
     modal.className = 'trailer-modal';
     modal.innerHTML = `
@@ -113,23 +99,19 @@ function openTrailerModal(trailerUrl) {
         </div>
     `;
     
-    // Add to body
     document.body.appendChild(modal);
     document.body.classList.add('trailer-modal-open');
     
-    // Show modal
     setTimeout(() => {
         modal.classList.add('active');
     }, 10);
     
-    // Close on background click
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             closeTrailerModal(modal);
         }
     });
     
-    // Close on Escape key
     const handleEscape = (e) => {
         if (e.key === 'Escape') {
             closeTrailerModal(modal);
@@ -139,7 +121,6 @@ function openTrailerModal(trailerUrl) {
     document.addEventListener('keydown', handleEscape);
 }
 
-// Close trailer modal (unchanged)
 function closeTrailerModal(modal) {
     modal.classList.remove('active');
     document.body.classList.remove('trailer-modal-open');
@@ -151,7 +132,6 @@ function closeTrailerModal(modal) {
     }, 300);
 }
 
-// Glass effect navbar on scroll
 function handleNavbarScroll() {
     const navbar = document.querySelector('.navbar');
     const scrolled = window.scrollY > 50;
@@ -163,13 +143,11 @@ function handleNavbarScroll() {
     }
 }
 
-// Get film URL parameter
 function getFilmFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('film');
 }
 
-// Create the film title element
 function createFilmTitle(filmTitle) {
     const heroContent = document.querySelector('#film-header .hero-content .col-12');
     
@@ -178,13 +156,11 @@ function createFilmTitle(filmTitle) {
         return;
     }
     
-    // Remove any existing title
     const existingTitle = heroContent.querySelector('.film-title');
     if (existingTitle) {
         existingTitle.remove();
     }
     
-    // Create h1 element exactly like homepage
     const titleElement = document.createElement('h1');
     titleElement.className = 'film-title';
     titleElement.textContent = filmTitle;
@@ -193,10 +169,8 @@ function createFilmTitle(filmTitle) {
     console.log('Film title created:', filmTitle);
 }
 
-// Add meta tag population with error handling
 function populateMetaTags(film) {
     try {
-        // Update page title
         document.title = `${film.title} - BRUUT INC.`;
         
         const pageTitleElement = document.getElementById('page-title');
@@ -204,18 +178,15 @@ function populateMetaTags(film) {
             pageTitleElement.textContent = `${film.title} - BRUUT INC.`;
         }
         
-        // Create or update meta tags
         updateMetaTag('description', film.description.replace(/\n/g, ' ').substring(0, 160));
         updateMetaTag('keywords', `${film.title}, BRUUT INC, film, cinema, ${film.director}`);
         
-        // Open Graph tags
         updateMetaProperty('og:title', `${film.title} - BRUUT INC.`);
         updateMetaProperty('og:description', film.description.replace(/\n/g, ' ').substring(0, 160));
         updateMetaProperty('og:image', `${window.location.origin}/assets/images/${film.image}`);
         updateMetaProperty('og:url', window.location.href);
         updateMetaProperty('og:type', 'video.movie');
         
-        // Twitter Card tags
         updateMetaName('twitter:card', 'summary_large_image');
         updateMetaName('twitter:title', `${film.title} - BRUUT INC.`);
         updateMetaName('twitter:description', film.description.replace(/\n/g, ' ').substring(0, 160));
@@ -269,7 +240,6 @@ function updateMetaName(name, content) {
     }
 }
 
-// Display film details with comprehensive error handling
 function displayFilm() {
     try {
         console.log('Starting displayFilm function');
@@ -292,10 +262,8 @@ function displayFilm() {
             return;
         }
         
-        // Populate meta tags first
         populateMetaTags(film);
         
-        // Update header image
         const heroImage = document.querySelector('.hero-image-static');
         if (heroImage) {
             heroImage.style.backgroundImage = `url('assets/images/${film.image}')`;
@@ -304,10 +272,8 @@ function displayFilm() {
             console.error('Hero image element not found');
         }
         
-        // Create film title via JavaScript (matching homepage structure)
         createFilmTitle(film.title);
         
-        // Update description
         const descElement = document.getElementById('film-desc');
         if (descElement) {
             descElement.innerHTML = film.description.replace(/\n/g, '<br>');
@@ -316,13 +282,11 @@ function displayFilm() {
             console.error('Description element not found');
         }
         
-        // Handle trailer - create play button if trailer exists
         if (hasContent(film.trailer)) {
             createTrailerPlayButton(film.trailer);
             console.log('Trailer button created');
         }
         
-        // Update all film info fields (only show if they have content)
         toggleInfoItem('duration-item', 'film-duration', film.duration);
         toggleInfoItem('release-item', 'film-release', film.releaseDate);
         toggleInfoItem('director-item', 'film-director', film.director);
@@ -338,7 +302,6 @@ function displayFilm() {
     }
 }
 
-// Set current year
 function setCurrentYear() {
     const yearElement = document.getElementById('current-year');
     if (yearElement) {
@@ -346,7 +309,6 @@ function setCurrentYear() {
     }
 }
 
-// Simplified logo click handler
 function addNavigationEffects() {
     const logoLink = document.querySelector('.navbar-brand');
     
@@ -354,7 +316,6 @@ function addNavigationEffects() {
         logoLink.addEventListener('click', function(event) {
             event.preventDefault();
             
-            // Simple navigation with glass transition
             const glassOverlay = document.createElement('div');
             glassOverlay.id = 'navigation-glass';
             glassOverlay.style.background = 'rgba(0, 0, 0, 0.9)';
@@ -371,7 +332,6 @@ function addNavigationEffects() {
     }
 }
 
-// Calendar and showtimes functions
 async function createShowtimesSection() {
     try {
         const calendarData = await loadCalendarData();
@@ -379,7 +339,6 @@ async function createShowtimesSection() {
         
         if (futureShowtimes.length === 0) return;
         
-        // Find the film details section
         const filmDetailsSection = document.getElementById('film-details');
         
         if (!filmDetailsSection) {
@@ -387,7 +346,6 @@ async function createShowtimesSection() {
             return;
         }
         
-        // Create showtimes HTML
         const showtimesHTML = `
             <div class="container mt-5">
                 <div class="row">
@@ -411,7 +369,6 @@ async function createShowtimesSection() {
             </div>
         `;
         
-        // Add to film details section
         filmDetailsSection.insertAdjacentHTML('beforeend', showtimesHTML);
         console.log('Showtimes section added');
     } catch (error) {
@@ -419,7 +376,6 @@ async function createShowtimesSection() {
     }
 }
 
-// Include the same helper functions from main.js
 async function loadCalendarData() {
     try {
         const response = await fetch('calendar.json');
@@ -449,7 +405,6 @@ function formatDate(dateString) {
     return `${day} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-// Show yellow loading animation (for first visits)
 function showYellowLoadingAnimation() {
     console.log('Showing yellow loading animation on film page');
     
@@ -472,14 +427,12 @@ function showYellowLoadingAnimation() {
     document.body.insertBefore(loadingScreen, document.body.firstChild);
     document.body.classList.add('loading');
     
-    // Reveal content at 500ms
     setTimeout(() => {
         document.body.classList.remove('loading');
         document.body.classList.add('loaded');
         console.log('Film page content revealed at 500ms');
     }, 500);
     
-    // Hide loading screen at 2000ms
     setTimeout(() => {
         if (loadingScreen.parentNode) {
             loadingScreen.classList.add('loaded');
@@ -488,13 +441,11 @@ function showYellowLoadingAnimation() {
     }, 2000);
 }
 
-// Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Film page DOMContentLoaded triggered');
     
     const isInternal = isInternalNavigation();
     
-    // Check for page reload
     const isPageReload = performance.navigation && performance.navigation.type === 1;
     const isPageReloadModern = performance.getEntriesByType('navigation')[0]?.type === 'reload';
     
@@ -504,25 +455,20 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Is page reload (modern):', isPageReloadModern);
     
     if (isInternal && !isPageReload && !isPageReloadModern) {
-        // Internal navigation - just load normally without any transition
         console.log('Internal navigation detected - loading normally');
         
-        // Immediately show content
         document.body.classList.remove('loading');
         document.body.classList.add('loaded');
         
     } else {
-        // External navigation or page reload - show yellow loading animation
         console.log('External navigation or reload detected - showing yellow loading animation');
         
-        // Ensure body is in loading state
         document.body.classList.add('loading');
         document.body.classList.remove('loaded');
         
         showYellowLoadingAnimation();
     }
     
-    // Initialize film page with delay to ensure DOM is ready
     setTimeout(() => {
         loadFilmsData();
         setCurrentYear();
