@@ -74,7 +74,8 @@ async function createShowtimesSection() {
                             <div class="showtime-item">
                                 <h3>${showtime.filmTitle} - ${formatDate(showtime.date)}</h3>
                                 <h4>${showtime.time} - ${showtime.venue}</h4>
-                                <p>${showtime.description} / <a href="${showtime.ticketUrl}" target="_blank">INFO & TICKETS</a></p>
+                                <p>${showtime.description}</p>
+                                <p><a href="${showtime.ticketUrl}" target="_blank">INFO & TICKETS</a></p>
                                 <div class="footer-divider mb-4"></div>
                             </div>
                         `).join('')}
